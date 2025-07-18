@@ -1,2 +1,59 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+@font-face {
+  font-family: "Poppins-Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/assets/fonts/Poppins/Poppins-Bold.ttf");
+}
+@font-face {
+  font-family: "Poppins-SemiBold";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/assets/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+@font-face {
+  font-family: "Poppins-Medium";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/assets/fonts/Poppins/Poppins-Medium.ttf");
+}
+@font-face {
+  font-family: "Poppins-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/assets/fonts/Poppins/Poppins-Regular.ttf");
+}
+@font-face {
+  font-family: "Poppins-Light";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/assets/fonts/Poppins/Poppins-Light.ttf");
+}
+
+
+
+:root{
+    // -------color--------
+    --color-black:#000000;
+    --color-white:#ffffff;    
+    --color-gray:#a5a5a5;
+    --color-purple:#3e10aa34;
+    --color-dark-purple:#090036;
+    --color-light-purple:#b28dfd;
+    --color-shade-purple:#1d04576b;
+    --color-blue:#008cff;
+    // ------fonts-----------
+
+    --Poppins-Bold:'Poppins-Bold';
+    --Poppins-Regular:'Poppins-Regular';
+    --Poppins-SemiBold:'Poppins-SemiBold';
+    --Poppins-Medium:'Poppins-Medium';
+    --Poppins-Light:'Poppins-light';
+
+    //------gradients------
+    --indicator-gradient:linear-gradient(90deg,rgba(130, 14, 29, 0.15) 0%, rgba(212, 0, 255, 0.69) 25%, rgb(245, 98, 245) 50%, rgba(212, 0, 255, 0.69) 75%, rgba(163, 88, 128, 0) 100%);
+
+    //------box-shadow------
+     
+}

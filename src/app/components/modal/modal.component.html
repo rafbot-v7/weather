@@ -1,0 +1,55 @@
+<ion-header class="c-modal__header ion-no-border">
+  <ion-toolbar class="c-modal__toolbar headertoolbar">
+    <ion-segment value="hourly" class="m-modal__segment">
+      <ion-segment-button value="hourly" class="c-modal__segmentbtn" contentId="hourly">
+        Hourly Forecast
+      </ion-segment-button>
+      <ion-segment-button value="weekly" class="c-modal__segmentbtn" contentId="weekly">
+        Weekly Forecast
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+    <div class="c-modal__container">
+      <ion-segment-view class="c-modal__segmentview">
+  <ion-segment-content id="hourly" class="c-modal__segmentcontent">
+      <div class="c-modal__forecastlist">
+        @for (item of list; track $index) {
+        <div class="c-modal__forecast">
+          <app-forecast>
+          </app-forecast>
+        </div>
+        }
+      </div>
+       </ion-segment-content>
+         <ion-segment-content id="weekly" class="c-modal__segmentcontent">
+    <!-- <div class="m-modal__container">
+        @for (item of list; track $index) {
+        <app-forecast>
+        </app-forecast>
+        }
+
+      </div> -->
+  </ion-segment-content>
+</ion-segment-view >
+    </div>
+    
+ 
+
+<ion-footer class="c-modal__footer ion-no-border" *ngIf="showFooter" >
+      <div class="c-modal__actionbtns ">
+        <ion-buttons class="c-modal__btn location" click=toggleFooter() slot="start">
+          <ion-img src="/assets/icon/location.png" alt="location icon" class="c-modal__icon location"></ion-img>
+        </ion-buttons>
+        <ion-buttons class="c-modal__btn add">
+          <ion-img src="/assets/icon/addbtn.png" alt="add icon" class="c-modal__icon addbtn"></ion-img>
+        </ion-buttons>
+        <ion-buttons class="c-modal__btn menu" slot="end">
+          <ion-img src="/assets/icon/menu.png" alt="menu icon" class="c-modal__icon menu">
+
+          </ion-img>
+        </ion-buttons>
+      </div>
+
+    </ion-footer>

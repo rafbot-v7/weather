@@ -1,3 +1,4 @@
+@use 'src/theme/mixins.scss' as *;
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -35,3 +36,282 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+@keyframes slideDownFadeOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px); /* Slide down by 100px */
+    opacity: 0; /* Fade out */
+  }
+}
+app-home {
+    background-image: url("assets/images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ion-page {
+    justify-content: flex-start;
+    animation-fill-mode: both;
+    animation-duration: 0.9s;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--Poppins-SemiBold);
+    margin: 2px;
+    line-height: 0.9;
+
+
+}
+
+$name : m-home;
+$selector: ".#{$name}";
+
+#{$selector} {
+    &__content {
+        --background: none;
+        --color: var(--color-white);
+    }
+
+    &__weather {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 88px;
+    }
+
+    &__location {
+        font-size: 34px;
+        font-family: var(--Poppins-Regular);
+
+    }
+
+    &__temperature {
+        font-size: 90px;
+        font-family: var(--Poppins-Regular);
+    }
+
+    &__condition {
+        font-size: 20px;
+        font-family: var(--Poppins-SemiBold);
+        opacity: 0.8;
+    }
+
+    &__tempminmax {
+        font-size: 20px;
+        font-family: var(--Poppins-SemiBold);
+    }
+
+    &__house3d {
+        margin-top: 20px;
+    }
+
+}
+
+// $name:forecat-modal;
+// $selector: ".#{$name}";
+// #{$selector} {
+//     // --height:auto;
+//     // --max-height: 90%;
+//     // --min-height: 50%;
+//     align-items: flex-end;
+//      --border-radius: 25px;
+//     --border-color:var(--indicator-gradient);
+//     --border-width:2px;
+//     &::part(content){
+//             backdrop-filter: blur(25px) saturate(200%);
+//     -webkit-backdrop-filter: blur(25px) saturate(200%);
+//     background-color: var(--color-purple);
+//     }
+// }
+$name: c-modal;
+$selector: ".#{$name}";
+
+#{$selector} {
+    &__toolbar {
+        --background: transparent;
+        --color: var(--color-white);
+        --box-shadow: none;
+        --min-height: 40px;
+
+
+        &.headertoolbar {
+            &::part(container) {
+                border-bottom: 1px solid var(--color-dark-purple);
+            }
+
+            &::part(content) {
+                border-bottom: 1px solid var(--color-light-purple);
+            }
+        }
+
+    }
+
+    &__segmentview {
+        height: 173px
+    }
+
+    &__content {
+        --background: transparent;
+        --color: var(--color-white);
+    }
+
+    &__forecastlist {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+        padding: 17px 12px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+    }
+
+    &__container {
+        border-radius: 24%;
+        border-bottom: 1px solid var(--color-light-purple);
+        padding-bottom: 12px;
+    }
+
+    &__segmentbtn {
+        text-transform: capitalize;
+        // --color:var(--color-gray);
+        color: var(--color-gray);
+        --color-checked: var(--color-gray);
+        --indicator-color: var(--indicator-gradient);
+        --indicator-height: 2px;
+        --padding-top: 16px;
+        height: 41px;
+        min-height: 20px;
+        font-size: 12px;
+    }
+
+    &__weatherlist {
+        align-items: flex-end;
+        --border-radius: 50px;
+        --border-color: var(--indicator-gradient);
+        --border-width: 2px;
+
+        &::part(content) {
+            backdrop-filter: blur(10px) saturate(100%);
+            -webkit-backdrop-filter: blur(10px) saturate(100%);
+            background-color: var(--color-purple);
+
+        }
+
+        // &__forecast{
+        //     display: flex;
+        //     flex-direction: row;
+        //     align-items: center;
+        //     justify-content: center;
+        //     width: 46px;
+        //     height: 112px;
+        //     margin: 0 10px;
+        //     border-radius: 30px;
+        //        backdrop-filter: blur(2px) saturate(100%);
+        // -webkit-backdrop-filter: blur(2px) saturate(100%);
+        // background-color: var(--colr-shade-purple);
+        //     box-shadow: var(--box-shadow);
+        //     padding: 10px;
+        //     border: 1px solid var(--color-light-purple);
+        // }
+    }
+
+    &__btn {
+        --background: transparent;
+        --color: var(--color-white);
+        --box-shadow: none;
+        min-height: 45px;
+        min-width: 45px;
+        justify-content: center;
+        align-items: center;
+        --padding-top: 0px;
+        --padding-bottom: 0px;
+        --padding-start: 0px;
+        --padding-end: 0px;
+
+        &.add {
+            position: relative;
+            z-index: 10;
+            bottom: 50px;
+
+
+        }
+    }
+
+    &__icon {
+        width: 25px;
+
+        &.addbtn {
+            width: 350px;
+        }
+    }
+
+    &__actionbtns {
+        display: flex;
+        justify-content: space-between;
+        align-items: self-start;
+    }
+
+    &__footer {
+        position: fixed;
+        bottom: 380px;
+        &.slide-down {
+  animation: slideDownFadeOut 0.5s ease-in-out forwards; 
+        }}
+}
+
+$name: c-forecast;
+$selector: ".#{$name}";
+
+#{$selector} {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 58px;
+        height: 125px;
+        margin: 0 5px;
+        border-radius: 30px;
+        backdrop-filter: blur(2px) saturate(100%);
+        -webkit-backdrop-filter: blur(2px) saturate(100%);
+        background-color: var(--colr-shade-purple);
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+        border: 1px solid var(--color-light-purple);
+    }
+
+    &__detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-family: var(--Poppins-Regular);
+        color: var(--color-white);
+        margin: 0;
+    }
+
+    &__percentage {
+        font-size: 11px;
+        font-family: var(--Poppins-SemiBold);
+        color: var(--color-blue);
+        margin: 0;
+        position: relative;
+        bottom: 8px;
+    }
+}

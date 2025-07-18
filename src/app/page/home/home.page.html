@@ -1,0 +1,27 @@
+<ion-content class="m-home__content">
+  <div id="container" class="m-home__container">
+   <div class="m-home__weather">
+    <h4 class="m-home__location">
+      {{weatherData.city}}
+    </h4>
+    <h1 class="m-home__temperature">
+      {{weatherData.temperature}}°
+    </h1>
+    <h3 class="m-home__condition">
+      {{weatherData.condition}}
+    </h3>
+    <div class="m-home__tempminmax">
+      <span class="m-home__tempmax">
+       H {{weatherData.highest}}°
+      </span> 
+      <span class="m-home__tempmin">
+       L {{weatherData.lowest}}°
+      </span>
+    </div>
+   
+  </div>
+  <div class="m-home__house3d">
+    <img src="/assets/images/house3d.png" alt="house3d" class="m-home__house3dimg">
+  </div>
+</div>
+</ion-content>
