@@ -4,7 +4,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { locationOutline } from 'ionicons/icons';
+import { airplane, airplaneOutline, locationOutline, chevronForwardOutline, sunnyOutline,partlySunnyOutline } from 'ionicons/icons';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -15,4 +15,8 @@ bootstrapApplication(AppComponent, {
 });
 addIcons({
   'location-outline': locationOutline,
+  'airplane-outline': airplaneOutline,
+  'chevron-forward-outline': chevronForwardOutline,
+  'sunny-outline': sunnyOutline,
+  'partly-sunny-outline':partlySunnyOutline,
 });

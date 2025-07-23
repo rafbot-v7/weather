@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'weatherlist',
     loadComponent: () => import('./page/weatherlist/weatherlist.page').then( m => m.WeatherlistPage)
   },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./page/tabs/tabs.routes').then( m => m.route)
+  },
 ];

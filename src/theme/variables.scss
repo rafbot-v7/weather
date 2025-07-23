@@ -37,12 +37,14 @@
     // -------color--------
     --color-black:#000000;
     --color-white:#ffffff;    
-    --color-gray:#a5a5a5;
+    --color-gray:#7f7f7f;
     --color-purple:#3e10aa34;
     --color-dark-purple:#090036;
+    --color-violet:#3B285A;
     --color-light-purple:#b28dfd;
     --color-shade-purple:#1d04576b;
     --color-blue:#008cff;
+    --color-dark-gray:#393939;
     // ------fonts-----------
 
     --Poppins-Bold:'Poppins-Bold';
@@ -53,7 +55,7 @@
 
     //------gradients------
     --indicator-gradient:linear-gradient(90deg,rgba(130, 14, 29, 0.15) 0%, rgba(212, 0, 255, 0.69) 25%, rgb(245, 98, 245) 50%, rgba(212, 0, 255, 0.69) 75%, rgba(163, 88, 128, 0) 100%);
-
+--graph-gradient:linear-gradient(90deg,rgb(62, 90, 181) 0%, rgb(231, 67, 146) 100%);
     //------box-shadow------
      
 }

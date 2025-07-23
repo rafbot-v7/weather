@@ -1,27 +1,48 @@
 <ion-content class="m-home__content">
   <div id="container" class="m-home__container">
-   <div class="m-home__weather">
-    <h4 class="m-home__location">
-      {{weatherData.city}}
-    </h4>
-    <h1 class="m-home__temperature">
-      {{weatherData.temperature}}°
-    </h1>
-    <h3 class="m-home__condition">
-      {{weatherData.condition}}
-    </h3>
-    <div class="m-home__tempminmax">
-      <span class="m-home__tempmax">
-       H {{weatherData.highest}}°
-      </span> 
-      <span class="m-home__tempmin">
-       L {{weatherData.lowest}}°
-      </span>
+    <div class="m-home__weathercontainer">
+      <div class="m-home__weather">
+         <h4 class="m-home__location">
+          {{weatherData.city}}
+        </h4>
+        <div class="m-home__tempcondition ">
+          <h1 class="m-home__temperature">
+            {{weatherData.temperature}}°
+          </h1>
+          <h3 class="m-home__condition">
+            {{weatherData.condition}}
+          </h3>
+        </div>
+      
+        @if (!isModalOpenFull) {
+         <div class="m-home__tempminmax">
+          <span class="m-home__tempmax">
+            H {{weatherData.highest}}°
+          </span>
+          <span class="m-home__tempmin">
+            L {{weatherData.lowest}}°
+          </span>
+        </div>
+        }
+       
+      </div>
     </div>
-   
+    <div class="m-home__house3d">
+      <img src="/assets/images/house3d.png" alt="house3d" class="m-home__house3dimg">
+    </div>
   </div>
-  <div class="m-home__house3d">
-    <img src="/assets/images/house3d.png" alt="house3d" class="m-home__house3dimg">
-  </div>
-</div>
 </ion-content>
+<!-- <ion-footer class="c-modal__footer ion-no-border" *ngIf="showFooter" style="position: relative; z-index: 21000;">
+  <ion-toolbar class="c-modal__actionbtns ">
+    <ion-buttons class="c-modal__btn location" click=toggleFooter() slot="start">
+      <ion-img src="/assets/icon/location.png" alt="location icon" class="c-modal__icon location"></ion-img>
+    </ion-buttons>
+    <ion-buttons class="c-modal__btn">
+      <ion-img src="/assets/icon/addbtn.png" alt="add icon" class="c-modal__icon addbtn"></ion-img>
+    </ion-buttons>
+    <ion-buttons class="c-modal__btn menu" slot="end">
+      <ion-img src="/assets/icon/menu.png" alt="menu icon" class="c-modal__icon menu">
+      </ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer> -->
