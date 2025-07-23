@@ -194,7 +194,7 @@ export class HomePage implements OnInit, AfterViewInit {
             }
           //  tempcondition.classList.remove('flexcolumn')
           modalcontainer.classList.remove('bottom-border')
-           console.log(tempcondition);
+          //  console.log(tempcondition);
            weatherElemet.style.marginTop = `${margin}px`;
            weatherDetails.style.marginTop=`${wdmargin}px`;
             temperature.style.fontSize = `${fontSize}px`;
