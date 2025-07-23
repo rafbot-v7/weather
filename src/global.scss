@@ -195,6 +195,57 @@ $selector: ".#{$name}";
             }
         }
     }
+     &__tabbar {
+        position: absolute;
+        width: 100%;
+        --background: transparent;
+        bottom: 0px;
+        height: 130px;
+    }
+    &__tabs{
+        position: fixed;
+        bottom: 50%;
+        left: 0;
+        width: 100%;
+        padding: 0px 30px;
+
+
+    }
+    // &__addbutton{
+    //     width: 100px;
+    //     height: 100px;
+    //     background: var(--color-dark-purple);
+    // }
+    &__button{
+        margin: auto;
+    }
+    &__tabbar{
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+    }
+    &__segmented-ring {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+      blue 50% 75%, 
+      transparent 75% 100%
+    );
+    mask: radial-gradient(circle, transparent 60%, black 61%);
+    -webkit-mask: radial-gradient(circle, transparent 60%, black 61%);
+  }
+
+    &__icon {
+        width: 25px;
+
+        &.addbtn {
+            // width: 350px;
+            width: 250px;
+            // position: fixed;
+            // bottom: 0px;
+        }
+    }
 
     &__weathercontainer {
         border: 1px solid var(--color-dark-purple);
@@ -445,22 +496,5 @@ $name: m-tabs;
 $selector: ".#{$name}";
 
 #{$selector} {
-    &__tabbar {
-        position: absolute;
-        width: 100%;
-        --background: transparent;
-        bottom: 0px;
-        height: 130px;
-    }
-
-    &__icon {
-        width: 25px;
-
-        &.addbtn {
-            width: 350px;
-            width: 250px;
-            position: fixed;
-            bottom: 0px;
-        }
-    }
+   
 }

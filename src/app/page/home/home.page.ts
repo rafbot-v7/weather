@@ -14,6 +14,7 @@ import { elementAt } from 'rxjs';
 export class HomePage implements OnInit, AfterViewInit {
   apphome: any
   modalElement: ElementRef<any> | null = null;
+  modalTabs: HTMLElement | null = null;
   isModalOpenFull = false;
   showFooter = true;
   weatherData = {
@@ -85,7 +86,9 @@ export class HomePage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.openforecast().then(() => {
       const element = document.querySelector('ion-segment-view');
+      this.modalTabs = document.querySelector('.c-modal__tabs') as HTMLElement
       console.log(element);
+      // this.modalTabs = modalTabElement ? new ElementRef(modalTabElement) : null;
       this.modalElement = element ? new ElementRef(element) : null;
       this.setUpGesture()
 
@@ -104,6 +107,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private gesturecontroller: GestureController,
   private animation:AnimationController) { }
   async openforecast() {
+    const initialBreakpoint = 0.45
+    const breakpoints = [0.45,1]
     const modal = await this.modal.create({
       component: ModalComponent,
       componentProps: {
@@ -115,8 +120,8 @@ export class HomePage implements OnInit, AfterViewInit {
       animated: true,
       keyboardClose: true,
       handle: true,
-      breakpoints: [0.39, 1],
-      initialBreakpoint: 0.39,
+      breakpoints: breakpoints,
+      initialBreakpoint: initialBreakpoint,
       canDismiss: false,
     });
     modal.addEventListener('willPresent', () => {
@@ -134,8 +139,11 @@ export class HomePage implements OnInit, AfterViewInit {
     modal.addEventListener('ionBreakpointDidChange', (event: CustomEvent) => {
       const breakpoint = event.detail.breakpoint;
       console.log('Breakpoint changed:', breakpoint);
-      if (breakpoint === 0.39) {
+      if (breakpoint === 0.45) {
         this.isModalOpenFull = false;
+        if (this.modalTabs) {
+          this.modalTabs.style.opacity = '1';
+        }
         // document.querySelector('.c-modal__weatherlist')?.classList.remove('nofilter');
         this.apphome = document.querySelector('app-home') as HTMLElement;
         // this.apphome.classList.remove('app-home__modal-open');
@@ -144,6 +152,7 @@ export class HomePage implements OnInit, AfterViewInit {
       } else {
         // document.getElementsByClassName('c-modal__footer')[0].classList.add('slide-down');
         this.isModalOpenFull = true;
+        
         this.apphome = document.querySelector('app-home') as HTMLElement;
         // this.apphome.classList.add('app-home__modal-open');
         // document.querySelector('.c-modal__weatherlist')?.classList.add('nofilter');
@@ -180,6 +189,9 @@ export class HomePage implements OnInit, AfterViewInit {
           const wdmargin = wdStartmargin - (wdStartmargin - wdEndMargin) * progress
           const opacity = 0.2 + 1 * progress;
           if (deltaY <= 0) {
+            if(this.modalTabs){
+            this.modalTabs.style.opacity='0'
+            }
           //  tempcondition.classList.remove('flexcolumn')
           modalcontainer.classList.remove('bottom-border')
            console.log(tempcondition);
