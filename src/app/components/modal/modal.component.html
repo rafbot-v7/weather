@@ -35,18 +35,42 @@
     </ion-segment-view>
   </div>
   <div class="c-modal__weatherdetails non-draggable">
-    <div class="c-modal__tabs">
+    <!-- <div class="c-modal__tabs">
       <div class="c-modal__tabbar">
         <div class="c-modal__button">
           <ion-img src="/assets/icon/location.png" alt="location icon" class="c-modal__icon location"></ion-img>
         </div>
         <div class="c-modal__button">
           <ion-img src="/assets/icon/addbtn.png" alt="add icon" class="c-modal__icon addbtn"></ion-img>
-           <!-- <div class="c-modal__addbutton"></div> -->
+           
         </div>
         <div class="c-modal__button">
           <ion-img src="/assets/icon/menu.png" alt="menu icon" class="c-modal__icon menu"></ion-img>
         </div>
+      </div>
+    </div> -->
+    <div class="c-modal__tabs">
+      <div class="c-modal__tabbar">
+        <div class="c-modal__buttonwrapper">
+          <ion-button class="c-modal__button">
+            <ion-img src="/assets/icon/location.png" alt="location icon" class="c-modal__icon location"></ion-img>
+          </ion-button>
+        </div>
+        <div class="c-modal__addbuttoncontainer">
+          <ion-img src="/assets/icon/addbtn.png" alt="add icon" class="c-modal__icon addbtn"></ion-img>
+
+          <div class="c-modal__addbuttonwrapper">
+            <ion-button class="c-modal__button add">
+              <ion-icon name="add-outline" class="c-modal__icon add"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+        <div class="c-modal__buttonwrapper">
+          <ion-button class="c-modal__button">
+            <ion-img src="/assets/icon/menu.png" alt="menu icon" class="c-modal__icon menu"></ion-img>
+          </ion-button>
+        </div>
+
       </div>
     </div>
     <div class="c-modal__weathercontainer primary">
@@ -104,9 +128,8 @@
           <div class="c-modal__weathergraph">
             <div class="c-modal__risklevel">
               <h4 class="c-modal__riskleveltext">5:24 AM</h4>
-              <div class="c-modal__graph">
-                <div class="c-modal__graphbar"></div>
-              </div>
+
+
             </div>
           </div>
           <div class="c-modal__seemore">

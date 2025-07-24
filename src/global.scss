@@ -123,15 +123,51 @@ $selector: ".#{$name}";
     &__location {
         font-size: 34px;
         font-family: var(--Poppins-Regular);
+
+        @include breakpoint(mobile-sm) {
+            font-size: 33px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 34px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 35px;
+        }
     }
 
     &__temperature {
         font-size: 90px;
         font-family: var(--Poppins-Regular);
 
+        @include breakpoint(mobile-sm) {
+            font-size: 89px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 90px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 91px;
+        }
+
         &.small {
             font-size: 20px;
             font-family: var(--Poppins-Regular);
+
+            @include breakpoint(mobile-sm) {
+                font-size: 19px;
+            }
+
+            @include breakpoint(mobile-md) {
+                font-size: 20px;
+            }
+
+            @include breakpoint(mobile-lg) {
+                font-size: 21px;
+            }
         }
     }
 
@@ -139,6 +175,18 @@ $selector: ".#{$name}";
         font-size: 20px;
         font-family: var(--Poppins-SemiBold);
         opacity: 0.8;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 19px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 20px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 21px;
+        }
 
         &.small {
             font-family: var(--Poppins-Regular);
@@ -148,6 +196,18 @@ $selector: ".#{$name}";
     &__tempminmax {
         font-size: 20px;
         font-family: var(--Poppins-SemiBold);
+
+        @include breakpoint(mobile-sm) {
+            font-size: 19px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 20px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 21px;
+        }
     }
 
     &__house3d {
@@ -195,55 +255,122 @@ $selector: ".#{$name}";
             }
         }
     }
-     &__tabbar {
-        position: absolute;
-        width: 100%;
-        --background: transparent;
-        bottom: 0px;
-        height: 130px;
+
+    &__tabbar {
+        // position: absolute;
+        // width: 100%;
+        // --background: transparent;
+        // bottom: 0px;
+        // height: 130px;
     }
-    &__tabs{
+
+    &__tabs {
         position: fixed;
         bottom: 50%;
         left: 0;
         width: 100%;
-        padding: 0px 30px;
+        // padding: 0px 30px;
+        // min-height: 115px;
+        background: transparent;
 
 
     }
+
+    &__addbuttoncontainer {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        left: 25%;
+        z-index: 3;
+        min-height: 115px;
+        // background: var(--color-dark-blue);
+        //         clip-path: polygon(
+        //     70.65% 30.94%, /* Top-right */
+        //     70.65% 72.98%, /* Bottom-right */
+        //     26.10% 72.98%, /* Bottom-left */
+        //     26.10% 30.94%  /* Top-left */
+        //   );
+        // clip-path: shape(75% 0%, 100% 100%, 0% 100%, 25% 0%);
+        // border-radius: 50% 50% 0 0;
+        // clip-path: shape(from 75% 0%, curve to 100% 100% with 75% 25%, curve to 0% 100% with 8% 100%, curve to 25% 0% with 25% 25%, curve to 75% 0% with 50% 0%);
+        // clip-path: shape(from 75% 0%, curve to 100% 100% with 91.29% 50.00%, curve to 0% 100% with 50.00% 95.96%, curve to 25% 0% with 2.21% 50.00%, curve to 75% 0% with 50.00% 11.89%);
+        // border-radius: 50% 50% 0 0;
+        // &::after{
+        //    content: '';
+        //    height: 50px;
+        //    width: 50%;
+        //    background: transparent;
+        //    position: absolute; 
+        // }
+    }
+
     // &__addbutton{
     //     width: 100px;
     //     height: 100px;
     //     background: var(--color-dark-purple);
     // }
-    &__button{
-        margin: auto;
+    &__addbuttonwrapper {
+        height: 57px;
+        width: 57px;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 3;
+        box-shadow: rgba(6, 24, 44, 0.4) 3px 3px 3px 3px, rgba(6, 24, 44, 0.65) 3px 3px 3px 3px, rgba(255, 255, 255, 0.08) 3px 3px 3px 3px;
+        // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
     }
-    &__tabbar{
+
+    &__button {
+        width: 105px;
+        --background: transparent;
+        --box-shadow: none;
+
+        &.add {
+            --border-radius: 50%;
+            --background: var(--color-white);
+            height: 56px;
+            width: 56px;
+            --ripple-color: var(--color-dark-blue);
+            --box-shadow: rgb(178 178 178) 3px 3px 6px 0px inset, rgb(161 161 161 / 50%) -3px -3px 6px 1px inset;
+        }
+    }
+
+    &__tabbar {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         position: relative;
+        min-height: 115px;
     }
+
+    &__buttonwrapper {
+        display: flex;
+        align-items: center;
+    }
+
     &__segmented-ring {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: conic-gradient(
-      blue 50% 75%, 
-      transparent 75% 100%
-    );
-    mask: radial-gradient(circle, transparent 60%, black 61%);
-    -webkit-mask: radial-gradient(circle, transparent 60%, black 61%);
-  }
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(blue 50% 75%,
+                transparent 75% 100%);
+        mask: radial-gradient(circle, transparent 60%, black 61%);
+        -webkit-mask: radial-gradient(circle, transparent 60%, black 61%);
+    }
 
     &__icon {
         width: 25px;
 
+        &.add {
+            color: var(--color-dark-blue);
+            font-size: 25px;
+        }
+
         &.addbtn {
-            // width: 350px;
-            width: 250px;
-            // position: fixed;
-            // bottom: 0px;
+            position: absolute;
+           
+    z-index: 2;
+    width: 100%;
+    bottom: 42px;
         }
     }
 
@@ -309,10 +436,34 @@ $selector: ".#{$name}";
 
     &__seemoretext {
         font-size: 15px;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 14px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 15px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 16px;
+        }
     }
 
     &__indextext {
         font-size: 22px;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 21px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 22px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 23px;
+        }
     }
 
     &__container {
@@ -334,6 +485,18 @@ $selector: ".#{$name}";
         height: 41px;
         min-height: 20px;
         font-size: 12px;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 11px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 12px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 13px;
+        }
     }
 
     &__wrapper {
@@ -402,18 +565,41 @@ $selector: ".#{$name}";
         }
     }
 
-
     &__weathertitle {
         display: flex;
         font-size: 20px;
         align-items: center;
         color: var(--color-gray);
+
+        @include breakpoint(mobile-sm) {
+            font-size: 19px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 20px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 21px;
+        }
     }
 
     &__weathertext {
         font-family: var(--Poppins-Regular);
         font-size: 14px;
         color: var(--color-gray);
+
+        @include breakpoint(mobile-sm) {
+            font-size: 13px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 14px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 15px;
+        }
     }
 
     &__actionbtns {
@@ -480,6 +666,18 @@ $selector: ".#{$name}";
         font-family: var(--Poppins-Regular);
         color: var(--color-white);
         margin: 0;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 11px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 12px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 13px;
+        }
     }
 
     &__percentage {
@@ -489,12 +687,22 @@ $selector: ".#{$name}";
         margin: 0;
         position: relative;
         bottom: 8px;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 10px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 11px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 12px;
+        }
     }
 }
 
 $name: m-tabs;
 $selector: ".#{$name}";
 
-#{$selector} {
-   
-}
+#{$selector} {}

@@ -4,7 +4,6 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, ModalController, IonFooter
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { IonModal, GestureController, Gesture, AnimationController, GestureDetail } from '@ionic/angular';
 import { elementAt } from 'rxjs';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
