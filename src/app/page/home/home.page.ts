@@ -23,7 +23,6 @@ export class HomePage implements OnInit, AfterViewInit {
     icon: '',
     highest: 24,
     lowest: 18,
-
   }
   weatherDataList = [
     {
@@ -90,17 +89,12 @@ export class HomePage implements OnInit, AfterViewInit {
       // this.modalTabs = modalTabElement ? new ElementRef(modalTabElement) : null;
       this.modalElement = element ? new ElementRef(element) : null;
       this.setUpGesture()
-
     }).catch((error) => {
       console.error('Error opening modal:', error);
     });
-
   }
   ngAfterViewInit() {
-
-
   }
-
   constructor(
     private modal: ModalController,
     private gesturecontroller: GestureController,
@@ -155,7 +149,6 @@ export class HomePage implements OnInit, AfterViewInit {
         this.apphome = document.querySelector('app-home') as HTMLElement;
         // this.apphome.classList.add('app-home__modal-open');
         // document.querySelector('.c-modal__weatherlist')?.classList.add('nofilter');
-
       }
     })
   }
@@ -168,6 +161,7 @@ export class HomePage implements OnInit, AfterViewInit {
     const wdStartmargin = 90;
     const wdEndMargin = 10;
     const modalcontainer = document.querySelector('.c-modal__container') as HTMLElement
+    const weathercontainer = document.querySelectorAll('.c-modal__weathercontainer') as NodeListOf<HTMLElement>
     const weatherDetails = document.querySelector('.c-modal__weatherdetails') as HTMLElement
     const weatherElemet = document.querySelector('.m-home__weather') as HTMLElement
     const tempcondition = document.querySelector('.m-home__tempcondition') as HTMLElement;
@@ -201,12 +195,17 @@ export class HomePage implements OnInit, AfterViewInit {
             //  console.log(opacity);
             ionpage.style.background = `linear-gradient(90deg,rgba(34, 24, 61, ${opacity}) 0%, rgba(67, 41, 106,  ${opacity}) 50%, rgba(34, 24, 61,  ${opacity}) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
             house3d.style.opacity = `${0.8 - opacity}`
-
+            weathercontainer.forEach(item =>{
+              item.style.opacity = `${opacity}`
+            })
           }
           else {
             // tempcondition.classList.add('flexcolumn')
             // console.log(fontSize,endSize);
             modalcontainer.classList.add('bottom-border')
+             weathercontainer.forEach(item =>{
+              item.style.opacity = `${0.8 - opacity}`
+            })
             ionpage.style.background = `linear-gradient(90deg,rgba(34, 24, 61, ${1 - opacity}) 0%, rgba(67, 41, 106,  ${1 - opacity}) 50%, rgba(34, 24, 61,  ${1 - opacity}) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
             house3d.style.opacity = `${opacity}`;
             temperature.style.fontSize = `${startSize - fontSize + endSize}px`;
@@ -219,18 +218,15 @@ export class HomePage implements OnInit, AfterViewInit {
       onEnd: (detail: GestureDetail) => {
         temperature = document.querySelector('.m-home__temperature') as HTMLElement;
         if (!this.isModalOpenFull) {
-          
             (temperature as HTMLElement).style.fontSize = `${startSize}px`;
             (ionpage as HTMLElement).style.background = `linear-gradient(90deg,rgba(34, 24, 61, 1) 0%, rgba(67, 41, 106,  1) 50%, rgba(34, 24, 61,  1) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
             house3d.style.opacity='1'
-          
         }
         else {
           
             (temperature as HTMLElement).style.fontSize = `${startSize}px`;
             (ionpage as HTMLElement).style.background = `linear-gradient(90deg,rgba(34, 24, 61, 0.2) 0%, rgba(67, 41, 106,  0.2) 50%, rgba(34, 24, 61,  0.2) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
             house3d.style.opacity='0'
-          
         }
       }
     })

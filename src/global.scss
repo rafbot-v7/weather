@@ -281,9 +281,13 @@ $selector: ".#{$name}";
         display: flex;
         justify-content: center;
         position: absolute;
-        left: 25%;
+        /* left: 25%; */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: 3;
         min-height: 115px;
+        max-width: 200px;
         // background: var(--color-dark-blue);
         //         clip-path: polygon(
         //     70.65% 30.94%, /* Top-right */
@@ -311,11 +315,11 @@ $selector: ".#{$name}";
     //     background: var(--color-dark-purple);
     // }
     &__addbuttonwrapper {
-        height: 57px;
-        width: 57px;
+        width: 34%;
+        aspect-ratio: 1;
         border-radius: 50%;
         position: absolute;
-        bottom: 44px;
+        bottom: 35px;
         z-index: 3;
         box-shadow: rgba(6, 24, 44, 0.4) 3px 3px 3px 3px, rgba(6, 24, 44, 0.65) 3px 3px 3px 3px, rgba(255, 255, 255, 0.08) 3px 3px 3px 3px;
         // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
@@ -329,8 +333,9 @@ $selector: ".#{$name}";
         &.add {
             --border-radius: 50%;
             --background: var(--color-white);
-            height: 56px;
-            width: 56px;
+            /* height: 56px; */
+            width: 100%;
+            aspect-ratio: 1;
             --ripple-color: var(--color-dark-blue);
             --box-shadow: rgb(178 178 178) 3px 3px 6px 0px inset, rgb(161 161 161 / 50%) -3px -3px 6px 1px inset;
         }
@@ -387,6 +392,7 @@ $selector: ".#{$name}";
         border-radius: 20px;
         width: calc(100% / 2 - 5px);
         position: relative;
+        opacity: 0;
 
         &.primary {
             background: var(--color-dark-purple);
