@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild,AfterViewInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonContent, IonSegmentView, IonSegmentContent, IonButton, IonIcon, IonFooter, IonImg, IonButtons, IonTabs, IonTabBar, IonTabButton } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonContent, IonSegmentView, IonSegmentContent, IonButton, IonIcon, IonFooter, IonImg, IonButtons, IonTabs, IonTabBar, IonTabButton, IonInput, IonInputPasswordToggle } from "@ionic/angular/standalone";
 import { ForecastComponent } from "../forecast/forecast.component";
 import { CommonModule } from '@angular/common';
 import * as Highcharts from 'highcharts';
@@ -9,7 +9,7 @@ import Bellcurve from 'highcharts/modules/histogram-bellcurve';
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
-  imports: [IonTabButton, IonTabBar, IonTabs , IonButtons, IonImg, IonFooter,CommonModule, IonIcon, IonButton, IonContent, IonSegmentButton, IonSegment, IonToolbar, IonHeader, IonSegmentView, IonSegmentContent, ForecastComponent],
+  imports: [IonInput, IonTabButton, IonTabBar, IonTabs, IonButtons, IonImg, IonFooter, CommonModule, IonIcon, IonButton, IonContent, IonSegmentButton, IonSegment, IonToolbar, IonHeader, IonSegmentView, IonSegmentContent, ForecastComponent, IonInputPasswordToggle],
 })
 export class ModalComponent  implements OnInit,AfterViewInit {
 Highcharts: typeof Highcharts = Highcharts;

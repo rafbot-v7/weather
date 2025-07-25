@@ -315,6 +315,7 @@ $selector: ".#{$name}";
         width: 57px;
         border-radius: 50%;
         position: absolute;
+        bottom: 44px;
         z-index: 3;
         box-shadow: rgba(6, 24, 44, 0.4) 3px 3px 3px 3px, rgba(6, 24, 44, 0.65) 3px 3px 3px 3px, rgba(255, 255, 255, 0.08) 3px 3px 3px 3px;
         // box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
@@ -347,6 +348,10 @@ $selector: ".#{$name}";
         align-items: center;
     }
 
+    &__mainvalue {
+        font-size: 32px;
+    }
+
     &__segmented-ring {
         width: 200px;
         height: 200px;
@@ -367,10 +372,10 @@ $selector: ".#{$name}";
 
         &.addbtn {
             position: absolute;
-           
-    z-index: 2;
-    width: 100%;
-    bottom: 42px;
+
+            z-index: 2;
+            width: 100%;
+            bottom: 32px;
         }
     }
 
@@ -378,9 +383,10 @@ $selector: ".#{$name}";
         border: 1px solid var(--color-dark-purple);
         padding: 10px;
         background: var(--color-violet);
-
+        min-height: 145px;
         border-radius: 20px;
         width: calc(100% / 2 - 5px);
+        position: relative;
 
         &.primary {
             background: var(--color-dark-purple);
@@ -397,11 +403,49 @@ $selector: ".#{$name}";
         padding: 12px 24px;
         margin-top: 90px;
         position: relative;
-        max-height: 431px;
+        min-height: 431px;
         overflow: scroll;
         bottom: 32px;
 
     }
+
+    &__overviewimgwrapper {
+        position: relative;
+    }
+
+    &__detailtext {
+        font-size: 12px;
+        text-transform: none;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 11px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 12px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 13px;
+        }
+    }
+
+    &__weatheroverview {
+        position: absolute;
+        padding: 10px;
+        bottom: 0;
+        left: 0;
+    }
+
+
+    &__arrow {
+        position: absolute;
+        bottom: 15%;
+        width: 75%;
+        left: 15%;
+        rotate: -135deg;
+    }
+
 
     &__segmentview {
         height: 173px
@@ -451,18 +495,34 @@ $selector: ".#{$name}";
     }
 
     &__indextext {
-        font-size: 22px;
+        font-size: 26px;
 
         @include breakpoint(mobile-sm) {
-            font-size: 21px;
+            font-size: 25px;
         }
 
         @include breakpoint(mobile-md) {
-            font-size: 22px;
+            font-size: 26px;
         }
 
         @include breakpoint(mobile-lg) {
-            font-size: 23px;
+            font-size: 27px;
+        }
+    }
+
+    &__weathervalue {
+        font-size: 17px;
+
+        @include breakpoint(mobile-sm) {
+            font-size: 16px;
+        }
+
+        @include breakpoint(mobile-md) {
+            font-size: 17px;
+        }
+
+        @include breakpoint(mobile-lg) {
+            font-size: 18px;
         }
     }
 

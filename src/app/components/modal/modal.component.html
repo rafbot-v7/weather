@@ -10,7 +10,8 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
-<div class="c-modal__content">
+<ion-content class="c-modal__content">
+
   <div class="c-modal__container bottom-border">
     <ion-segment-view class="c-modal__segmentview">
       <ion-segment-content id="hourly" class="c-modal__segmentcontent">
@@ -104,7 +105,7 @@
           </div>
           <div class="c-modal__weathergraph">
             <div class="c-modal__risklevel">
-              <h4 class="c-modal__indextext">4 moderate</h4>
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue"> 4 <br> </span> moderate</h4>
               <div class="c-modal__graph">
                 <div class="c-modal__graphbar"></div>
               </div>
@@ -121,22 +122,19 @@
       <div class="c-modal__weathercontainer">
         <div class="c-modal__weather">
           <div class="c-modal__weathertitle">
-            <ion-icon></ion-icon>
             <ion-icon class="c-modal__weathericom airquality" name="partly-sunny-outline"></ion-icon>
             <h4 class="c-modal__weathertext">sunrise</h4>
           </div>
           <div class="c-modal__weathergraph">
             <div class="c-modal__risklevel">
-              <h4 class="c-modal__riskleveltext">5:24 AM</h4>
-
-
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue">5:24 AM</span></h4>
             </div>
           </div>
-          <div class="c-modal__seemore">
-            <h4 class="c-modal__seemoretext">
-              See more
+          <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__detailtext">
+              Sunset: 7:25PM
             </h4>
-            <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon>
+            <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
           </div>
         </div>
       </div>
@@ -146,46 +144,123 @@
         <div class="c-modal__weather">
           <div class="c-modal__weathertitle">
             <ion-icon class="c-modal__weathericom airquality" name="airplane-outline"></ion-icon>
-            <h4 class="c-modal__weathertext">Air Quality</h4>
+            <h4 class="c-modal__weathertext">wind</h4>
           </div>
-          <div class="c-modal__weathergraph">
-            <div class="c-modal__risklevel">
-              <h4 class="c-modal__riskleveltext">3-low health risk</h4>
-              <div class="c-modal__graph">
-                <div class="c-modal__graphbar"></div>
-              </div>
-            </div>
+          <div class="c-modal__overviewimgwrapper">
+            <ion-img src="/assets/icon/compass.png" class="c-modal__overviewimg"></ion-img>
+            <ion-img src="/assets/icon/arrows.png" class="c-modal__arrow"></ion-img>
           </div>
-          <div class="c-modal__seemore">
-            <h4 class="c-modal__seemoretext">
-              See more
-            </h4>
-            <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon>
-          </div>
+          <!-- <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__derailtext">
+              See more -->
+          <!-- </h4> -->
+          <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
+          <!-- </div> -->
         </div>
       </div>
       <div class="c-modal__weathercontainer">
         <div class="c-modal__weather">
           <div class="c-modal__weathertitle">
             <ion-icon class="c-modal__weathericom airquality" name="airplane-outline"></ion-icon>
-            <h4 class="c-modal__weathertext">Air Quality</h4>
+            <h4 class="c-modal__weathertext">rain fall</h4>
           </div>
           <div class="c-modal__weathergraph">
             <div class="c-modal__risklevel">
-              <h4 class="c-modal__riskleveltext">3-low health risk</h4>
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue">1.8mm </span>in last hour </h4>
               <div class="c-modal__graph">
-                <div class="c-modal__graphbar"></div>
+
               </div>
             </div>
           </div>
-          <div class="c-modal__seemore">
-            <h4 class="c-modal__seemoretext">
-              See more
+          <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__detailtext">
+              1.2mm expected in next 24 hour
             </h4>
-            <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon>
+            <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="c-modal__wrapper">
+      <div class="c-modal__weathercontainer">
+        <div class="c-modal__weather">
+          <div class="c-modal__weathertitle">
+            <ion-icon class="c-modal__weathericom airquality" name="thermometer-outline"></ion-icon>
+            <h4 class="c-modal__weathertext">feels like</h4>
+          </div>
+          <div class="c-modal__weathergraph">
+            <div class="c-modal__risklevel">
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue">90° </span> </h4>
+              <div class="c-modal__graph">
+
+              </div>
+            </div>
+          </div>
+          <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__detailtext">
+              similar to the actual temparature
+            </h4>
+            <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
+          </div>
+        </div>
+      </div>
+      <div class="c-modal__weathercontainer">
+        <div class="c-modal__weather">
+          <div class="c-modal__weathertitle">
+            <ion-icon class="c-modal__weathericom airquality" name="water-outline"></ion-icon>
+            <h4 class="c-modal__weathertext">humidity</h4>
+          </div>
+          <div class="c-modal__weathergraph">
+            <div class="c-modal__risklevel">
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue">90%</span> </h4>
+              <div class="c-modal__graph">
+
+              </div>
+            </div>
+          </div>
+          <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__detailtext">
+              The drew point in 17 right now
+            </h4>
+            <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="c-modal__wrapper">
+      <div class="c-modal__weathercontainer">
+        <div class="c-modal__weather">
+          <div class="c-modal__weathertitle">
+            <ion-icon class="c-modal__weathericom airquality" name="eye-outline"></ion-icon>
+            <h4 class="c-modal__weathertext">visibility</h4>
+          </div>
+          <div class="c-modal__weathergraph">
+            <div class="c-modal__risklevel">
+              <h4 class="c-modal__weathervalue"><span class="c-modal__mainvalue">8 KM </span> </h4>
+              <div class="c-modal__graph">
+
+              </div>
+            </div>
+          </div>
+          <div class="c-modal__weatheroverview">
+            <h4 class="c-modal__detailtext">
+              similar to the actual temparature
+            </h4>
+            <!-- <ion-icon name="chevron-forward-outline" class="c-modal__weathericom"></ion-icon> -->
+          </div>
+        </div>
+      </div>
+      <div class="c-modal__weathercontainer">
+        <div class="c-modal__weather">
+          <div class="c-modal__weathertitle">
+            <ion-icon class="c-modal__weathericom airquality" name="speedometer-outline"></ion-icon>
+            <h4 class="c-modal__weathertext">pressure</h4>
+          </div>
+          <div class="c-modal__overviewimgwrapper">
+            <ion-img src="/assets/icon/compass.png" class="c-modal__overviewimg"></ion-img>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ion-content>
