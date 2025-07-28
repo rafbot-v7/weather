@@ -3,7 +3,18 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { IonHeader, IonToolbar, IonTitle, IonContent, ModalController, IonFooter, IonButtons, IonImg } from '@ionic/angular/standalone';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { IonModal, GestureController, Gesture, AnimationController, GestureDetail } from '@ionic/angular';
-import { elementAt } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+import { Preferences } from '@capacitor/preferences';
+import { key } from 'ionicons/icons';
+interface WeatherData {
+  city: string;
+  temperature: number;
+  condition: string;
+  icon: string;
+  highest: number;
+  lowest: number;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -11,225 +22,216 @@ import { elementAt } from 'rxjs';
   imports: [IonImg, IonButtons, IonFooter, CommonModule, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage implements OnInit, AfterViewInit {
-  apphome: any
-  modalElement: ElementRef<any> | null = null;
-  modalTabs: HTMLElement | null = null;
+  @ViewChild('modalElement', { static: false }) modalElementRef?: ElementRef<HTMLElement>;
+  private modalTabs?: HTMLElement;
   isModalOpenFull = false;
   showFooter = true;
-  weatherData = {
+  private readonly WEATHERDATA = 'weatherdata'
+  private readonly CONFIG = {
+    INITIAL_BREAKPOINT: 0.45,
+    BREAKPOINTS: [0.45, 1],
+    MAX_DRAG: window.innerHeight * 0.1,
+    STYLES: {
+      FONT: { START_SIZE: 90, END_SIZE: 20 },
+      MARGIN: { START: 88, END: 60 },
+      WEATHER_MARGIN: { START: 90, END: 10 },
+      OPACITY: { MIN: 0.2, MAX: 1, HOUSE_MAX: 0.8 },
+    },
+    SELECTORS: {
+      MODAL: '.c-modal__weatherlist',
+      MODAL_CONTAINER: '.c-modal__container',
+      MODAL_TABS: '.c-modal__tabs',
+      WEATHER_CONTAINER: '.c-modal__weathercontainer',
+      WEATHER_DETAILS: '.c-modal__weatherdetails',
+      WEATHER: '.m-home__weather',
+      TEMPERATURE: '.m-home__temperature',
+      HOUSE_3D: '.m-home__house3dimg',
+      APP_HOME: 'app-home',
+      SEGMENT_VIEW: 'ion-segment-view'
+    },
+    BACKGROUND: (opacity: number) =>
+      `linear-gradient(90deg, rgba(34, 24, 61, ${opacity}) 0%, rgba(67, 41, 106, ${opacity}) 50%, rgba(34, 24, 61, ${opacity}) 100%), url("assets/images/background.jpg") no-repeat center/cover`,
+  };
+  weatherData: WeatherData = {
     city: 'Montreal',
     temperature: 19,
-    condition: 'Moslty Clear',
+    condition: 'Mostly Clear',
     icon: '',
     highest: 24,
     lowest: 18,
-  }
-  weatherDataList = [
-    {
-      city: 'Montreal',
-      temperature: 19,
-      condition: 'Moslty Clear',
-      icon: '',
-      highest: 24,
-      lowest: 18,
-    },
-    {
-      city: 'Toronto',
-      temperature: 22,
-      condition: 'Sunny',
-      icon: '',
-      highest: 26,
-      lowest: 20,
-    },
-    {
-      city: 'Vancouver',
-      temperature: 18,
-      condition: 'Rainy',
-      icon: '',
-      highest: 22,
-      lowest: 16,
-    },
-    {
-      city: 'Calgary',
-      temperature: 15,
-      condition: 'Cloudy',
-      icon: '',
-      highest: 20,
-      lowest: 12,
-    },
-    {
-      city: 'Calgary',
-      temperature: 15,
-      condition: 'Cloudy',
-      icon: '',
-      highest: 20,
-      lowest: 12,
-    },
-    {
-      city: 'Calgary',
-      temperature: 15,
-      condition: 'Cloudy',
-      icon: '',
-      highest: 20,
-      lowest: 12,
-    },
-    {
-      city: 'Calgary',
-      temperature: 15,
-      condition: 'Cloudy',
-      icon: '',
-      highest: 20,
-      lowest: 12,
-    },]
-  ngOnInit() {
-    this.openforecast().then(() => {
-      const element = document.querySelector('ion-segment-view');
-      this.modalTabs = document.querySelector('.c-modal__tabs') as HTMLElement
-      console.log(element);
-      // this.modalTabs = modalTabElement ? new ElementRef(modalTabElement) : null;
-      this.modalElement = element ? new ElementRef(element) : null;
-      this.setUpGesture()
+  };
+  data: any
+  weatherDataList: WeatherData[] = [
+    { city: 'Montreal', temperature: 19, condition: 'Mostly Clear', icon: '', highest: 24, lowest: 18 },
+    { city: 'Toronto', temperature: 22, condition: 'Sunny', icon: '', highest: 26, lowest: 20 },
+    { city: 'Vancouver', temperature: 18, condition: 'Rainy', icon: '', highest: 22, lowest: 16 },
+    { city: 'Calgary', temperature: 15, condition: 'Cloudy', icon: '', highest: 20, lowest: 12 },
+    { city: 'Calgary', temperature: 15, condition: 'Cloudy', icon: '', highest: 20, lowest: 12 },
+    { city: 'Calgary', temperature: 12, condition: 'Cloudy', icon: '', highest: 20, lowest: 12 },
+    { city: 'Vancouver', temperature: 15, condition: 'Cloudy', icon: '', highest: 20, lowest: 12 },
+    { city: 'Calgary', temperature: 20, condition: 'Sunny', icon: '', highest: 20, lowest: 12 },
+  ];
+
+  constructor(
+    private modalCtrl: ModalController,
+    private gestureCtrl: GestureController,
+    private animationCtrl: AnimationController,
+    private api: ApiService
+  ) { }
+
+  async ngOnInit() {
+    this.openForecast().then(() => {
+      this.initializeModalElements();
+      this.setupGesture();
     }).catch((error) => {
       console.error('Error opening modal:', error);
     });
+    this.loadData()
   }
+
   ngAfterViewInit() {
   }
-  constructor(
-    private modal: ModalController,
-    private gesturecontroller: GestureController,
-  private animation:AnimationController) { }
-  async openforecast() {
-    const initialBreakpoint = 0.45
-    const breakpoints = [0.45,1]
-    const modal = await this.modal.create({
+  async loadData() {
+    const storedWeather = await Preferences.get({ key: this.WEATHERDATA });
+    console.log(storedWeather);
+    if (storedWeather.value != undefined || storedWeather.value!=null) {
+      this.data = JSON.parse(storedWeather.value)
+      console.log(this.data, 'drtfyugu');
+    } else {
+      this.api.getData('forecast?latitude=22&longitude=79&hourly=temperature_2m,precipitation,precipitation_probability,rain,showers,wind_speed_10m,wind_direction_10m&timezone=auto&start_date=2025-07-27&end_date=2025-08-05').subscribe(
+        {
+          next: async (data) => {
+            this.data = data;
+            await Preferences.set({ key: this.WEATHERDATA, value: JSON.stringify(this.data) });
+            this.data = (await Preferences.get({ key: this.WEATHERDATA })).value;
+            console.log(this.data,'efwvfcqdwx');
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        }
+      );
+    }
+
+  }
+  private async openForecast() {
+    const modal = await this.modalCtrl.create({
       component: ModalComponent,
-      componentProps: {
-        list: this.weatherDataList
-      },
-      cssClass: "c-modal__weatherlist",
+      componentProps: { list: this.weatherDataList },
+      cssClass: this.CONFIG.SELECTORS.MODAL.slice(1),
       backdropDismiss: false,
       showBackdrop: true,
       animated: true,
       keyboardClose: true,
       handle: true,
-      breakpoints: breakpoints,
-      initialBreakpoint: initialBreakpoint,
+      breakpoints: this.CONFIG.BREAKPOINTS,
+      initialBreakpoint: this.CONFIG.INITIAL_BREAKPOINT,
       canDismiss: false,
     });
     modal.addEventListener('willPresent', () => {
-        const modalElement = document.querySelector('.c-modal__weatherlist');
-        if (modalElement) {
-          const nonDraggableArea = modalElement.querySelector('.non-draggable');
-          if (nonDraggableArea) {
-            nonDraggableArea.addEventListener('touchstart', (event) => {
-              event.stopPropagation(); // Prevent touch events from triggering drag
-            });
-          }
+      const modalElement = document.querySelector(this.CONFIG.SELECTORS.MODAL);
+      if (modalElement) {
+        const nonDraggableArea = modalElement.querySelector('.non-draggable');
+        if (nonDraggableArea) {
+          nonDraggableArea.addEventListener('touchstart', (event) => {
+            event.stopPropagation();
+          });
         }
-      });
-    await modal.present();
+      }
+    });
+
     modal.addEventListener('ionBreakpointDidChange', (event: CustomEvent) => {
       const breakpoint = event.detail.breakpoint;
-      console.log('Breakpoint changed:', breakpoint);
-      if (breakpoint === 0.45) {
-        this.isModalOpenFull = false;
-        if (this.modalTabs) {
-          this.modalTabs.style.opacity = '1';
-        }
-        // document.querySelector('.c-modal__weatherlist')?.classList.remove('nofilter');
-        this.apphome = document.querySelector('app-home') as HTMLElement;
-        // this.apphome.classList.remove('app-home__modal-open');
-        // const footer = document.getElementsByClassName('c-modal__footer')[0].classList.remove('slide-down');
-        // console.log('footr', footer);
-      } else {
-        // document.getElementsByClassName('c-modal__footer')[0].classList.add('slide-down');
-        this.isModalOpenFull = true;
-        
-        this.apphome = document.querySelector('app-home') as HTMLElement;
-        // this.apphome.classList.add('app-home__modal-open');
-        // document.querySelector('.c-modal__weatherlist')?.classList.add('nofilter');
+      this.isModalOpenFull = breakpoint !== this.CONFIG.INITIAL_BREAKPOINT;
+      if (this.modalTabs) {
+        this.modalTabs.style.opacity = this.isModalOpenFull ? '0' : '1';
       }
-    })
+    });
+
+    await modal.present();
   }
-  setUpGesture() {
-    const ionpage = document.querySelector('app-home') as HTMLElement;
-    const startSize = 90;
-    const endSize = 20;
-    const startMargin = 88;
-    const endMargin = 60;
-    const wdStartmargin = 90;
-    const wdEndMargin = 10;
-    const modalcontainer = document.querySelector('.c-modal__container') as HTMLElement
-    const weathercontainer = document.querySelectorAll('.c-modal__weathercontainer') as NodeListOf<HTMLElement>
-    const weatherDetails = document.querySelector('.c-modal__weatherdetails') as HTMLElement
-    const weatherElemet = document.querySelector('.m-home__weather') as HTMLElement
-    const tempcondition = document.querySelector('.m-home__tempcondition') as HTMLElement;
-    let temperature = document.querySelector('.m-home__temperature') as HTMLElement;
-    const house3d = document.querySelector('.m-home__house3dimg') as HTMLElement
-    const gestute = this.gesturecontroller.create({
-      el: this.modalElement?.nativeElement,
+
+  private initializeModalElements() {
+    this.modalTabs = document.querySelector(this.CONFIG.SELECTORS.MODAL_TABS) as HTMLElement;
+    const modalElement = document.querySelector(this.CONFIG.SELECTORS.SEGMENT_VIEW) as HTMLElement;
+    if (modalElement) {
+      this.modalElementRef = new ElementRef(modalElement);
+    }
+  }
+
+  private setupGesture() {
+    if (!this.modalElementRef?.nativeElement) return;
+
+    const elements = {
+      ionPage: document.querySelector(this.CONFIG.SELECTORS.APP_HOME) as HTMLElement,
+      modalContainer: document.querySelector(this.CONFIG.SELECTORS.MODAL_CONTAINER) as HTMLElement,
+      weatherContainers: document.querySelectorAll(this.CONFIG.SELECTORS.WEATHER_CONTAINER) as NodeListOf<HTMLElement>,
+      weatherDetails: document.querySelector(this.CONFIG.SELECTORS.WEATHER_DETAILS) as HTMLElement,
+      weather: document.querySelector(this.CONFIG.SELECTORS.WEATHER) as HTMLElement,
+      temperature: document.querySelector(this.CONFIG.SELECTORS.TEMPERATURE) as HTMLElement,
+      house3d: document.querySelector(this.CONFIG.SELECTORS.HOUSE_3D) as HTMLElement,
+    };
+
+    const gesture = this.gestureCtrl.create({
+      el: this.modalElementRef.nativeElement,
       gestureName: 'swipe-modal',
       direction: 'y',
-      onMove: (detail: GestureDetail) => {
-        temperature = document.querySelector('.m-home__temperature') as HTMLElement;
-        const deltaY = detail.deltaY;
-        requestAnimationFrame(() => {
-          const maxDrag = window.innerHeight * 0.1;
-          const progress = Math.min(Math.abs(deltaY) / maxDrag, 1);
-          const fontSize = startSize - (startSize - endSize) * progress;
-          const margin = startMargin - (startMargin - endMargin) * progress;
-          const wdmargin = wdStartmargin - (wdStartmargin - wdEndMargin) * progress
-          const opacity = 0.2 + 1 * progress;
-          if (deltaY <= 0) {
-            if(this.modalTabs){
-            this.modalTabs.style.opacity='0'
-            }
-          //  tempcondition.classList.remove('flexcolumn')
-          modalcontainer.classList.remove('bottom-border')
-          //  console.log(tempcondition);
-           weatherElemet.style.marginTop = `${margin}px`;
-           weatherDetails.style.marginTop=`${wdmargin}px`;
-            temperature.style.fontSize = `${fontSize}px`;
-            // console.log(temperature,'drag  up');
-            //  console.log(opacity);
-            ionpage.style.background = `linear-gradient(90deg,rgba(34, 24, 61, ${opacity}) 0%, rgba(67, 41, 106,  ${opacity}) 50%, rgba(34, 24, 61,  ${opacity}) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
-            house3d.style.opacity = `${0.8 - opacity}`
-            weathercontainer.forEach(item =>{
-              item.style.opacity = `${opacity}`
-            })
-          }
-          else {
-            // tempcondition.classList.add('flexcolumn')
-            // console.log(fontSize,endSize);
-            modalcontainer.classList.add('bottom-border')
-             weathercontainer.forEach(item =>{
-              item.style.opacity = `${0.8 - opacity}`
-            })
-            ionpage.style.background = `linear-gradient(90deg,rgba(34, 24, 61, ${1 - opacity}) 0%, rgba(67, 41, 106,  ${1 - opacity}) 50%, rgba(34, 24, 61,  ${1 - opacity}) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
-            house3d.style.opacity = `${opacity}`;
-            temperature.style.fontSize = `${startSize - fontSize + endSize}px`;
-            weatherElemet.style.marginTop = `${startMargin - margin + endMargin}px`
-             weatherDetails.style.marginTop=`${wdStartmargin -  wdmargin + wdEndMargin}px`;
-            // console.log(temperature,'drag down');
-          }
-        })
-      },
-      onEnd: (detail: GestureDetail) => {
-        temperature = document.querySelector('.m-home__temperature') as HTMLElement;
-        if (!this.isModalOpenFull) {
-            (temperature as HTMLElement).style.fontSize = `${startSize}px`;
-            (ionpage as HTMLElement).style.background = `linear-gradient(90deg,rgba(34, 24, 61, 1) 0%, rgba(67, 41, 106,  1) 50%, rgba(34, 24, 61,  1) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
-            house3d.style.opacity='1'
-        }
-        else {
-          
-            (temperature as HTMLElement).style.fontSize = `${startSize}px`;
-            (ionpage as HTMLElement).style.background = `linear-gradient(90deg,rgba(34, 24, 61, 0.2) 0%, rgba(67, 41, 106,  0.2) 50%, rgba(34, 24, 61,  0.2) 100%),url("assets/images/background.jpg") no-repeat center/cover`;
-            house3d.style.opacity='0'
-        }
+      onMove: (detail: GestureDetail) => this.handleGestureMove(detail, elements),
+      onEnd: (detail: GestureDetail) => this.handleGestureEnd(elements),
+    });
+
+    gesture.enable();
+  }
+
+  private handleGestureMove(detail: GestureDetail, elements: any) {
+    const { deltaY } = detail;
+    const progress = Math.min(Math.abs(deltaY) / this.CONFIG.MAX_DRAG, 1);
+    const fontSize = this.interpolate(this.CONFIG.STYLES.FONT.START_SIZE, this.CONFIG.STYLES.FONT.END_SIZE, progress);
+    const margin = this.interpolate(this.CONFIG.STYLES.MARGIN.START, this.CONFIG.STYLES.MARGIN.END, progress);
+    const wdMargin = this.interpolate(this.CONFIG.STYLES.WEATHER_MARGIN.START, this.CONFIG.STYLES.WEATHER_MARGIN.END, progress);
+    const opacity = this.interpolate(this.CONFIG.STYLES.OPACITY.MIN, this.CONFIG.STYLES.OPACITY.MAX, progress);
+
+    requestAnimationFrame(() => {
+      if (deltaY <= 0) {
+        this.applyStylesOnSwipeUp(elements, fontSize, margin, wdMargin, opacity);
+      } else {
+        this.applyStylesOnSwipeDown(elements, fontSize, margin, wdMargin, opacity);
       }
-    })
-    gestute.enable()
+    });
+  }
+
+  private applyStylesOnSwipeUp(elements: any, fontSize: number, margin: number, wdMargin: number, opacity: number) {
+    if (this.modalTabs) this.modalTabs.style.opacity = '0';
+    elements.modalContainer.classList.remove('bottom-border');
+    elements.weather.style.marginTop = `${margin}px`;
+    elements.weatherDetails.style.marginTop = `${wdMargin}px`;
+    elements.temperature.style.fontSize = `${fontSize}px`;
+    elements.ionPage.style.background = this.CONFIG.BACKGROUND(opacity);
+    elements.house3d.style.opacity = `${this.CONFIG.STYLES.OPACITY.HOUSE_MAX - opacity}`;
+    elements.weatherContainers.forEach((item: HTMLElement) => {
+      item.style.opacity = `${opacity}`;
+    });
+  }
+
+  private applyStylesOnSwipeDown(elements: any, fontSize: number, margin: number, wdMargin: number, opacity: number) {
+    elements.modalContainer.classList.add('bottom-border');
+    elements.weatherContainers.forEach((item: HTMLElement) => {
+      item.style.opacity = `${this.CONFIG.STYLES.OPACITY.HOUSE_MAX - opacity}`;
+    });
+    elements.ionPage.style.background = this.CONFIG.BACKGROUND(1 - opacity);
+    elements.house3d.style.opacity = `${opacity}`;
+    elements.temperature.style.fontSize = `${this.CONFIG.STYLES.FONT.START_SIZE - fontSize + this.CONFIG.STYLES.FONT.END_SIZE}px`;
+    elements.weather.style.marginTop = `${this.CONFIG.STYLES.MARGIN.START - margin + this.CONFIG.STYLES.MARGIN.END}px`;
+    elements.weatherDetails.style.marginTop = `${this.CONFIG.STYLES.WEATHER_MARGIN.START - wdMargin + this.CONFIG.STYLES.WEATHER_MARGIN.END}px`;
+  }
+
+  private handleGestureEnd(elements: any) {
+    elements.temperature.style.fontSize = `${this.CONFIG.STYLES.FONT.START_SIZE}px`;
+    elements.ionPage.style.background = this.CONFIG.BACKGROUND(this.isModalOpenFull ? this.CONFIG.STYLES.OPACITY.MIN : this.CONFIG.STYLES.OPACITY.MAX);
+    elements.house3d.style.opacity = this.isModalOpenFull ? '0' : '1';
+  }
+
+  private interpolate(start: number, end: number, progress: number): number {
+    return start - (start - end) * progress;
   }
 }

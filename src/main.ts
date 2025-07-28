@@ -5,12 +5,15 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
 import { airplane, airplaneOutline, waterOutline,speedometerOutline,eyeOutline,thermometerOutline,locationOutline,addOutline, chevronForwardOutline, sunnyOutline,partlySunnyOutline } from 'ionicons/icons';
+import { provideHttpClient } from '@angular/common/http';
+provideHttpClient
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideHttpClient()
   ],
 });
 addIcons({
