@@ -6,6 +6,9 @@ import { IonModal, GestureController, Gesture, AnimationController, GestureDetai
 import { ApiService } from 'src/app/services/api.service';
 import { Preferences } from '@capacitor/preferences';
 import { key } from 'ionicons/icons';
+import { registerPlugin } from '@capacitor/core';
+import { physicalButtonPlugin } from '@rafiq/plugins-physicalbutton';
+import { ToastController } from '@ionic/angular';
 interface WeatherData {
   city: string;
   temperature: number;
@@ -14,6 +17,7 @@ interface WeatherData {
   highest: number;
   lowest: number;
 }
+const PhysicalButton = registerPlugin<physicalButtonPlugin>('physicalButton');
 
 @Component({
   selector: 'app-home',
@@ -76,10 +80,15 @@ export class HomePage implements OnInit, AfterViewInit {
     private modalCtrl: ModalController,
     private gestureCtrl: GestureController,
     private animationCtrl: AnimationController,
-    private api: ApiService
+    private api: ApiService,
+    private toastController: ToastController
   ) { }
 
   async ngOnInit() {
+    console.log(this.maximumCandies([4, 7, 5], 4));
+
+    // let unplaced = this.numOfUnplacedFruits([13, 68, 77], [18, 95, 74])
+    // console.log(unplaced, 'dhsdjsjd');
     this.openForecast().then(() => {
       this.initializeModalElements();
       this.setupGesture();
@@ -87,6 +96,18 @@ export class HomePage implements OnInit, AfterViewInit {
       console.error('Error opening modal:', error);
     });
     this.loadData()
+
+    // PhysicalButton.addListener('keyEvent', async (data: { key: string; keyCode: number }) => {
+    //   console.log(data, 'sdfgf');
+
+    //   const toast = await this.toastController.create({
+    //     message: `Key pressed: ${data.key} (Code: ${data.keyCode})`,
+    //     duration: 2000,
+    //     position: 'bottom',
+    //   });
+    //   await toast.present();
+    // });
+
   }
 
   ngAfterViewInit() {
@@ -94,7 +115,7 @@ export class HomePage implements OnInit, AfterViewInit {
   async loadData() {
     const storedWeather = await Preferences.get({ key: this.WEATHERDATA });
     console.log(storedWeather);
-    if (storedWeather.value != undefined || storedWeather.value!=null) {
+    if (storedWeather.value != undefined || storedWeather.value != null) {
       this.data = JSON.parse(storedWeather.value)
       console.log(this.data, 'drtfyugu');
     } else {
@@ -104,7 +125,7 @@ export class HomePage implements OnInit, AfterViewInit {
             this.data = data;
             await Preferences.set({ key: this.WEATHERDATA, value: JSON.stringify(this.data) });
             this.data = (await Preferences.get({ key: this.WEATHERDATA })).value;
-            console.log(this.data,'efwvfcqdwx');
+            console.log(this.data, 'efwvfcqdwx');
           },
           error: (err) => {
             console.log(err);
@@ -234,4 +255,68 @@ export class HomePage implements OnInit, AfterViewInit {
   private interpolate(start: number, end: number, progress: number): number {
     return start - (start - end) * progress;
   }
+  numOfUnplacedFruits(fruits: number[], baskets: number[]): number {
+
+    const freq: { [key: string]: number } = { a: 0, b: 0, c: 0 };
+    let s = 'abcabc'
+    console.log(++freq[s[0]], freq['a']);
+    for (const fruit of fruits) {
+      console.log(fruits, 'fruits');
+      for (let i = 0; i < baskets.length; i++) {
+        console.log(baskets, 'baskets');
+        if (baskets[i] >= fruit) {
+          baskets.splice(i, 1);
+          console.log(baskets, 'baskets removed');
+          break;
+        }
+      }
+    }
+    return baskets.length
+  };
+  minZeroArray(nums: number[], queries: number[][]): number {
+    console.log(nums);
+
+    let count = -1
+    for (let i = 0; i < queries.length; i++) {
+      let l = queries[i][0]
+      let r = queries[i][1]
+      let atmost = queries[i][2]
+      for (let j = 0; j < nums.length; j++) {
+        if (j <= r && j >= l) {
+          if (nums[j] > atmost) nums[j] -= atmost;
+          else nums[j] = 0
+        }
+        console.log(nums);
+
+      }
+      if (nums.every(num => num === 0)) return i
+    }
+    return count
+  };
+  maximumCandies(candies: number[], k: number): number {
+    let sum = 0
+    for (let i = 0; i < candies.length; i++) {
+      sum += candies[i]
+    }
+    if (sum < k) return 0
+    candies.sort((a, b) => a - b)
+    for (let i = 0; i <= candies.length; i++) {
+      if (candies[i] != 0) {
+        while (candies[i] > 0) {
+          console.log(candies[i] * candies.length, candies[i] * k);
+          if (candies[i] * candies.length <= candies[i] * k) {
+
+            return candies[i]
+          }
+
+          else {
+            candies[i]--
+            console.log(candies[i], i);
+
+          }
+        }
+      }
+    }
+    return 0;
+  };
 }

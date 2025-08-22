@@ -213,7 +213,11 @@ $selector: ".#{$name}";
     &__house3d {
         margin-top: 20px;
         position: fixed;
-        top: 261px
+        top: 261px;
+        width: 100%;
+    justify-content: center;
+    display: flex;
+
     }
 
 }
